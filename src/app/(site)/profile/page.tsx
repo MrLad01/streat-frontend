@@ -20,22 +20,22 @@ export default function Page() {
       : `${process.env.NEXT_PUBLIC_IMAGE_URL}/${session?.user?.image}`
     : "/images/user/user-03.png";
 
-  const coverPic = session?.user?.coverImage
-    ? session?.user?.coverImage.includes("http")
-      ? session?.user?.coverImage
-      : `${process.env.NEXT_PUBLIC_COVER_IMAGE_URL}/${session?.user?.coverImage}`
+  const coverPic = (session?.user as any)?.coverImage
+    ? (session?.user as any)?.coverImage.includes("http")
+      ? (session?.user as any)?.coverImage
+      : `${process.env.NEXT_PUBLIC_COVER_IMAGE_URL}/${(session?.user as any)?.coverImage}`
     : "/images/cover/cover-01.png";
 
   const [data, setData] = useState({
-    name: session?.user.name as string,
-    email: "",
+    name: (session?.user as any)?.name as string,
+    email: (session?.user as any)?.email as string,
     profilePhoto: profilePic,
     coverPhoto: coverPic,
   });
 
   const [file, setFile] = useState<File>();
   const [loading, setLoading] = useState(false);
-  const isDemo = session?.user?.email?.includes("demo-");
+  const isDemo = (session?.user as any)?.email?.includes("demo-");
 
   const handleChange = (e: any) => {
     if (e.target.name === "profilePhoto") {
