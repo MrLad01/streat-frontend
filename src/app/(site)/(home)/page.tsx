@@ -1,25 +1,11 @@
-"use client";
-
 import Signin from "@/components/Auth/Signin";
 import { Metadata } from "next";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Sign in",
 };
 
 export default function SignIn() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/dashboard");
-    }
-  }, [status, router]);
-
   return (
     <>
 
