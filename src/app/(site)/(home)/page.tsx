@@ -1,3 +1,5 @@
+"use client";
+
 import Signin from "@/components/Auth/Signin";
 import { Metadata } from "next";
 import { useSession } from "next-auth/react";
@@ -17,7 +19,7 @@ export default function SignIn() {
       router.push("/dashboard");
     }
   }, [status, router]);
-  
+
   return (
     <>
 
