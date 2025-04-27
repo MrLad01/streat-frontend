@@ -3,12 +3,17 @@ import { prisma } from "@/libs/prismaDb";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { isAuthorized } from "@/libs/isAuthorized";
+import { user } from "@/types"; // Import the User type
 
 export async function getApiKeys() {
   const user = await isAuthorized();
+  if (!user) {
+    return []; // If the user is not authorized, return an empty array
+  }
+
   const res = await prisma.apiKey.findMany({
     where: {
-      userId: user?.id as string,
+      userId: user.id, // Access the id property directly
     },
   });
   return res;
@@ -18,10 +23,10 @@ export async function createApiKey(keyName: string) {
   const user = await isAuthorized();
 
   if (!user) {
-    return null;
+    return null; // Return null if the user is not authorized
   }
 
-  const key = user.role as string;
+  const key = user.role; // Use the user's role for the API key
 
   // Hash the key
   const hashedKey = await bcrypt.hash(key, 10);
@@ -30,7 +35,7 @@ export async function createApiKey(keyName: string) {
     data: {
       name: keyName,
       key: hashedKey,
-      userId: user.id,
+      userId: user.id, // Store the user's id
     },
   });
 
