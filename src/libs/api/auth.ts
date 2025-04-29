@@ -5,7 +5,6 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // --- API Helpers ---
-
 interface LoginResponse {
   access_token: string;
   token_type: string;
